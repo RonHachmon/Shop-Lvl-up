@@ -1,9 +1,9 @@
 import { Sequelize } from "sequelize-typescript";
-import Config from "../config/config";
-
+import Config from "../config";
+export { default as Product } from './Product/index.model';
 const config = Config.production;
 
-
+console.log("asdasdasd")
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const modelMatch = (filename: string, member: string) =>
   filename.substring(0, filename.indexOf('/index.model')).toLowerCase() === member.toLowerCase();
@@ -13,9 +13,9 @@ const sequelize = new Sequelize(config.database, config.username, config.passwor
   dialect: 'postgres',
 });
 try {
-    await sequelize.authenticate();
+     sequelize.authenticate();
     console.log('Connection has been established successfully.');
-    await sequelize.sync({ force: true }); 
+     sequelize.sync({ force: true }); 
     console.log("The table for the User model was just (re)created!");
    
   } catch (error) {

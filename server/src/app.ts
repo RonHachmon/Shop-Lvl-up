@@ -1,9 +1,10 @@
 import express from 'express'
-// import api from './api';
+import api from './api';
 const app = express();
 
 app.use(express.json());
 app.use(function (req, res, next) {
+  
 
     // Website you wish to allow to connect
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
@@ -22,7 +23,7 @@ app.use(function (req, res, next) {
     next();
 });
 
-// app.use('/api', api);
+app.use('/api', api);
 
 app.listen(8080);
 export default app;

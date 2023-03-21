@@ -1,28 +1,27 @@
 {
   "compilerOptions": {
-    "target": "es2017",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx",// or a more recent ecmascript version
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+      "skipLibCheck": true,
+      "module": "commonjs",
+      "esModuleInterop": true,
+      "target": "es2017",
+      "resolveJsonModule": true,
+      "moduleResolution": "node",
+      "sourceMap": true,
+      "outDir": "./dist",
+      "baseUrl": ".",
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
+      "allowJs": true,
+      "lib": [
+          "es2019"
+      ],
+      "paths": {
+          "*": [
+              "node_modules/*"
+          ]
+      }
   },
   "include": [
-    "src"
+      "src/**/*"
   ]
 }
