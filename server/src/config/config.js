@@ -1,8 +1,8 @@
 module.exports = {
     development: {
-      username: '',
-      password: null,
-      database: `shop`,
+      username: 'postgres',
+      password: 'rootroot',
+      database: `shop-MTA`,
       host: '127.0.0.1',
       port: 5432,
       dialect: 'postgres',
@@ -22,9 +22,9 @@ module.exports = {
       },
     },
     test: {
-      username: '',
-      password: null,
-      database: `shop`,
+      username: 'postgres',
+      password: 'rootroot',
+      database: `shop-MTA`,
       host: '127.0.0.1',
       port: 5432,
       dialect: 'postgres',
@@ -44,9 +44,9 @@ module.exports = {
       },
     },
     production: {
-      username: 'rootroot',
+      username: 'postgres',
       password: 'rootroot',
-      database: `shop`,
+      database: `shop-MTA`,
       host: '127.0.0.1',
       port: 5432,
       dialect: 'postgres',

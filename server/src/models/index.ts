@@ -15,6 +15,9 @@ const sequelize = new Sequelize(config.database, config.username, config.passwor
 try {
     await sequelize.authenticate();
     console.log('Connection has been established successfully.');
+    await sequelize.sync({ force: true }); 
+    console.log("The table for the User model was just (re)created!");
+   
   } catch (error) {
     console.error('Unable to connect to the database:', error);
   }
