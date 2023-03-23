@@ -1,22 +1,35 @@
 import { Router } from 'express';
-import * as taskRepo from '../../repositories/task'
+import { or } from 'sequelize';
+import * as ProductRepo from '../../repositories/task'
 const router = Router();
 
-router.get('/:id', async (req, res) => {
-    const { id } = req.params;
-    const task = await taskRepo.findById(id);
-    res.json(task);
-});
-
+//get all product
+//can accepts query such as name and category
 router.get('/', async (req, res) => {
-    const tasks = await taskRepo.findAll();
-    res.json(tasks);
+    const category = req.query.category as string;
+    const name = req.query.name as string;
+    
+    let products;
+    
+    if (name && category) {
+        products = await ProductRepo.findByCategoryAndName(category, name);
+    } else if (name) {
+        products = await ProductRepo.findByName(name);
+    } else if (category) {
+        products = await ProductRepo.findByCategory(category);
+    } else {
+        products = await ProductRepo.findAll();
+    }
+    
+    res.json(products);
 })
 
-router.post('/', async (req, res) => {
-    const { title } = req.body;
-    const task = await taskRepo.create(title);
-    res.json(task);
+//update quantity 
+router.put('/update-quantity', async (req, res) => {
+    const {id,amount} = req.body;
+    const updateProduct = await  ProductRepo.updateQuantity(id,amount);
+    res.json(updateProduct);
 });
+
 
 export default router;

@@ -16,7 +16,7 @@ const sequelize = new Sequelize(config.database, config.username, config.passwor
 try {
     sequelize.authenticate();
     console.log('Connection has been established successfully.');
-    //sequelize.sync({ force: true }); 
+    sequelize.sync(); 
     console.log("The table for the User model was just (re)created!");
    
   } catch (error) {
@@ -26,7 +26,7 @@ try {
 sequelize.addModels([`${__dirname}/*/*.model.*`], modelMatch);
 
 //cannot run below code while sequelize.sync is running
-add_hard_coded_products()
+//add_hard_coded_products()
 
 // eslint-disable-next-line object-shorthand
 export default sequelize;
