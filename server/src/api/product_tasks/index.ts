@@ -4,9 +4,7 @@ import * as ProductRepo from '../../repositories/task'
 const router = Router();
 
 //get all product
-//acctepts query such as name and category
-// if they werent sent it will be treated as null,
-// and therfore ingored
+//can accepts query such as name and category
 router.get('/', async (req, res) => {
     const category = req.query.category as string;
     const name = req.query.name as string;
@@ -32,9 +30,6 @@ router.put('/update-quantity', async (req, res) => {
     const updateProduct = await  ProductRepo.updateQuantity(id,amount);
     res.json(updateProduct);
 });
-
-
-
 
 
 export default router;
