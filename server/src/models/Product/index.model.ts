@@ -1,6 +1,8 @@
 import {
     Table, Column, Model, PrimaryKey, DataType, CreatedAt, UpdatedAt, DeletedAt,
   } from 'sequelize-typescript';
+
+
  
   @Table({
     tableName: 'Products',
@@ -44,16 +46,16 @@ import {
       type: DataType.INTEGER.UNSIGNED,
       allowNull: false,
       comment: "The product current price",
-      validate:{ min:0}
+      validate:{ min:0,}
     })
     price: number;
     
     @Column({
       type: DataType.INTEGER.UNSIGNED,
       comment: "The product current quentity",
-      validate:{ min:0}
+      validate:{ min:0,}
     })
-    quentity: number;
+    quantity: number;
    
     @Column({
       type: DataType.STRING,
@@ -65,8 +67,7 @@ import {
       type: DataType.STRING,
       comment: "The product description",
       validate:{
-        is: ["^[a-z]+$",'i'],
-        isAlpha: true, 
+        is: /^[a-zA-Z ]+$/,
         isNumeric: false,
         len: [2,30]
       }
