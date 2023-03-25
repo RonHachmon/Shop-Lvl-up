@@ -41,8 +41,8 @@ const ProductDescription = styled.p`
   font-size: 14px;
   margin-top: 6px;
 `;
-const kaka=()=>{
-  console.log("kaka");
+const foo=()=>{
+  console.log("test");
 }
 const ProductComponent: React.FC<ProductProps> = ({ product }) => {
     return (
@@ -54,7 +54,7 @@ const ProductComponent: React.FC<ProductProps> = ({ product }) => {
         <ProductDescription>{product.description}</ProductDescription>
       </ProductInformation>
       <AddToCartButton disabled={false} onClick={ () => {
-          kaka();
+          foo();
       }}/>
     </ProductContainer>
   );
