@@ -10,6 +10,9 @@ import {
     paranoid: true,
   })
   export default class Product extends Model {
+    static findById(_id: string) {
+        throw new Error('Method not implemented.');
+    }
     @PrimaryKey
     @Column({
       type: DataType.UUID,
