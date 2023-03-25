@@ -43,7 +43,7 @@ export const findByCategoryAndName = (category:string,name:string): Promise<Prod
     return Product.findAll({
         where:{
             name:{
-            [Op.iLike]:'%'+name
+            [Op.iLike]:name+'%'
             },
             category:category
         }
