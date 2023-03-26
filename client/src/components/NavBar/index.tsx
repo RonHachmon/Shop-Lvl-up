@@ -1,7 +1,16 @@
 import React, { useState, useContext } from 'react';
+import LogoSrc from '../../assets/logo.png';
 import { ProductsContext } from '../../contexts/Products';
 import styled from 'styled-components';
 import { CategoryAndNameType, CategoryType, NameType } from '../../types/products';
+
+
+const Logo = styled.img`
+  width: 40px;
+  height: 40px;
+  margin: 15px;
+`;
+
 const NavContainer = styled.nav`
   display: flex;
   justify-content: center;
@@ -26,6 +35,7 @@ const NavSearchInput = styled.input`
 `;
 
 const NavFilterContainer = styled.div`
+  margin-right: 55px;
   display: flex;
   align-items: center;
 `;
@@ -75,9 +85,10 @@ const ShopNavBar = () => {
   };
   return (
     <NavContainer>
+      <Logo src={LogoSrc} />
       <NavSearchContainer>
         <NavSearchInput type="text" placeholder="Search products..." onChange={handleSearchChange} />
-        <button onClick={handleApplyFilters}>Apply Filters</button>
+        <button onClick={handleApplyFilters}  >Apply Filters</button>
       </NavSearchContainer>
       <NavFilterContainer>   
         <NavFilterLabel>category:</NavFilterLabel>
