@@ -16,6 +16,7 @@ export const ProductListContainer = styled.div`
   grid-gap: 20px;
 `;
 const DropdownWrapper = styled.div`
+  margin-bottom: 10px;
   display: flex;
   align-items: center;
 `;
