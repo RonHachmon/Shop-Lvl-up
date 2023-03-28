@@ -2,6 +2,12 @@ import React, { useState, useContext } from 'react';
 import LogoSrc from '../../assets/logo.png';
 import { ProductsContext } from '../../contexts/Products';
 import styled from 'styled-components';
+import { useNavigate } from "react-router-dom";
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCartShopping,faSearch } from '@fortawesome/free-solid-svg-icons';
+
+
 import { CategoryAndNameType, CategoryType, NameType } from '../../types/products';
 
 
@@ -50,10 +56,25 @@ const NavFilterSelect = styled.select`
   font-size: 16px;
   padding: 5px;
 `;
+const MenuButton = styled.button` 
+padding: 9px;
+margin-left: 5px;
+border-radius: 7px;
+background: #3B71CA;
+border-color: #3B71CA;
+&:hover {
+  opacity: ${({ disabled }) => (disabled ? 0.5 : 0.8)};
+}
+`;
 const ShopNavBar = () => {
   const [searchText, setSearchText] = useState('');
   const [filterCategory, setFilterCategory] = useState('');
   const {setProducts,getByOptions,getProducts } = useContext(ProductsContext);
+  const navigate = useNavigate();
+  const redirectToCart = () => {
+    console.log("switch to cart")
+    navigate("/cart");
+  };
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(event.target.value);
   };
@@ -88,7 +109,9 @@ const ShopNavBar = () => {
       <Logo src={LogoSrc} />
       <NavSearchContainer>
         <NavSearchInput type="text" placeholder="Search products..." onChange={handleSearchChange} />
-        <button onClick={handleApplyFilters}  >Apply Filters</button>
+        <MenuButton title='search' onClick={handleApplyFilters}>
+        <FontAwesomeIcon icon={faSearch} color="white" />
+           </MenuButton>
       </NavSearchContainer>
       <NavFilterContainer>   
         <NavFilterLabel>category:</NavFilterLabel>
@@ -99,6 +122,13 @@ const ShopNavBar = () => {
           <option value="meat">meat</option>
           <option value="snacks">snacks</option>
         </NavFilterSelect>
+        <MenuButton
+                  onClick={redirectToCart}
+                  title='to cart'
+                  >
+                  <FontAwesomeIcon icon={faCartShopping} color="white" />
+                </MenuButton>
+
       </NavFilterContainer>
 
     </NavContainer>

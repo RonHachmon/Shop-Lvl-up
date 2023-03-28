@@ -11,6 +11,12 @@ export interface Product {
     update_on: Date;
     deletion_date: Date | undefined;
 }
+
+export interface ProductAndQuantityType  {
+    Product: Product;
+    quantity: number;
+}
+
 export interface CategoryAndNameType extends Product {
     category: string;
     name: string;
@@ -32,4 +38,10 @@ export interface QuantityAndIDType extends Product {
     getByOptions:(properties: CategoryAndNameType| NameType | CategoryType) => Promise<Product[]>;    
     setProducts:(filteredProducts: Product[]) =>void;
     //buy product and add to cart;
+}
+
+export interface WishlistContextInterface {
+    cartProducts: ProductAndQuantityType[];
+    addToCart:(cart:ProductAndQuantityType)=>void;
+    buyProducts:()=>void;
 }

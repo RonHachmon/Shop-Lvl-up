@@ -4,6 +4,7 @@ import ProductList from '../ProductList';
 import ShopNavBar from "../NavBar";
 import {getFilteredProducts} from "../Helpers/hooks"
 import { ProductsContext } from '../../contexts/Products';
+
 export const ShopContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
@@ -25,6 +26,7 @@ const DropdownLabel = styled.label`
   margin-right: 8px;
 `;
 
+
 const Dropdown = styled.select`
   padding: 4px;
   border-radius: 4px;
@@ -37,6 +39,7 @@ const Dropdown = styled.select`
     outline: none;
   }
 `;
+
 const Main = () => {
     const { products,setProducts } = useContext(ProductsContext);
     const [selectedFilter, setSelectedFilter] = useState<string>('');
@@ -59,10 +62,12 @@ const Main = () => {
           break;
       }
     };
+
     
     return (
         <>
             <ShopNavBar />
+            
             <ShopContainer>
                 <DropdownWrapper>
                     <DropdownLabel htmlFor="filterDropdown">Filter By:</DropdownLabel>
@@ -78,6 +83,7 @@ const Main = () => {
                         <option value="zToA">Alphabetical Order: Z-A</option>
                     </Dropdown>
                 </DropdownWrapper>
+
                 <ProductListContainer>
                     <ProductList />
                 </ProductListContainer>
