@@ -9,6 +9,14 @@ const products = [
       description: 'Fresh milk from our farm',
     },
     {
+    name: 'Kebab',
+    category: 'meat',
+    price: 8,
+    quantity: 15,
+    image: 'https://res.cloudinary.com/shufersal/image/upload/f_auto,q_auto/v1587149017/prod/product_images/products_large/110738_L_P_7290000048905_1.png',
+    description: 'Juicy kebab meat cooked on an open flame, served with a side of pita bread and salad.'
+    },
+    {
       name: 'Bread',
       category: 'bakery',
       price: 3,
