@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Product } from "../../types/products"
+import { WishlistContext } from '../../contexts/Products/wishlistContext';
+import { Product,ProductAndQuantityType } from "../../types/products"
 import AddToCartButton from '../Button/addCart';
 interface ProductProps {
     product: Product
@@ -45,7 +46,8 @@ const foo=()=>{
   console.log("test");
 }
 const ProductComponent: React.FC<ProductProps> = ({ product }) => {
-    return (
+  const wishlistContext = useContext(WishlistContext);  
+  return (
     <ProductContainer>
       <ProductImage src={product.image} alt={product.name} />
       <ProductInformation>
@@ -54,7 +56,8 @@ const ProductComponent: React.FC<ProductProps> = ({ product }) => {
         <ProductDescription>{product.description}</ProductDescription>
       </ProductInformation>
       <AddToCartButton disabled={false} onClick={ () => {
-          foo();
+        const productAndQuantity: ProductAndQuantityType = { Product: product, quantity: 2 };
+          wishlistContext.addToCart(productAndQuantity)
       }}/>
     </ProductContainer>
   );
