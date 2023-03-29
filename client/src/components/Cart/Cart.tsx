@@ -1,6 +1,5 @@
 
 import React, { useContext, useEffect, useState } from 'react';
-import { ProductAndQuantityType } from "../../types/products"
 import styled from 'styled-components';
 import CartProduct from '../CartProduct/CartProduct';
 import WhislistContextProvider  from '../../contexts/Products/wishlistContext';
@@ -36,24 +35,18 @@ flex-direction: column;
 
 const Cart = () => {
     const whishlistContext = useContext(WishlistContext);
-    const [cartProducts, setCartProducts] = useState<ProductAndQuantityType[]>([]);
     const [totalPrice, setTotalPrice] = useState<number>(0);
 
-    const calculateTotalOrderPrice=()=>{
-        const total = cartProducts.reduce((accumulator, current) => {
+    useEffect(() => {
+        const calculateTotalOrderPrice = () => {
+          const total = whishlistContext.cartProducts.reduce((accumulator, current) => {
             return accumulator + current.Product.price * current.quantity;
           }, 0);
           return total;
-      }
-
-    useEffect(() => {
-        setCartProducts(whishlistContext.cartProducts);
-
-        setTotalPrice(calculateTotalOrderPrice())
-
-    }, [cartProducts, whishlistContext.cartProducts]);
-
-    
+        };
+      
+        setTotalPrice(calculateTotalOrderPrice());
+      }, [whishlistContext.cartProducts]);
     return (
         <WhislistContextProvider>
             <CartContainer>
@@ -63,9 +56,9 @@ const Cart = () => {
                     <LabelsDescription>Quantity</LabelsDescription>
                     <LabelsDescription>Price</LabelsDescription>
                 </CartLabelContainer>
-        {(cartProducts || []).map(t => 
-            (<CartProduct key={t.Product.id} cartProduct={t}></CartProduct>))}
-             <CartLabelContainer>
+                    {(whishlistContext.cartProducts || []).map(t => 
+                        (<CartProduct key={t.Product.id} cartProduct={t}></CartProduct>))}
+                 <CartLabelContainer>
                     <LabelsDescription></LabelsDescription>
                     <LabelsDescription>Total:</LabelsDescription>
                     <LabelsDescription>${totalPrice.toFixed(2)}</LabelsDescription>

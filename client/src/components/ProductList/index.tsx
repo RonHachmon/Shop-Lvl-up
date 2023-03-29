@@ -1,21 +1,31 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { ProductsContext } from '../../contexts/Products';
-import { Product } from '../../types/products';
+
 import ProductComponent from '../Product';
+import Pagination from '../Pagination/pagination';
 
-const ProductList = () => {
+interface ProductListProps {
+    itemsPerPage: number;
+  }
+  
+
+ export const ProductList: React.FC<ProductListProps> = ({ itemsPerPage }) => {
     const productsContext = useContext(ProductsContext);
-    const [products, setProducts] = useState<Product[]>([]);
-
-    useEffect(() => {
-        setProducts(productsContext.products);
-    }, [productsContext, productsContext.products]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const handlePageChange = (page: number) => {
+        setCurrentPage(page);
+    };
     return (
-        <>
-            {(products || []).map(t => 
-            (<ProductComponent key={t.id} product={t}></ProductComponent>))}
-        </>
-    )
-}
-
-export default ProductList;
+      <>
+        {(productsContext.products || []).map(t => (
+          <ProductComponent key={t.id} product={t}></ProductComponent>
+        ))}
+         <Pagination
+        itemsPerPage={itemsPerPage}
+        totalItems={productsContext.products.length}
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
+      />
+      </>
+    );
+  };

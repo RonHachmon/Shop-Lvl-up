@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { WishlistContext } from '../../contexts/Products/wishlistContext';
-import { Product,ProductAndQuantityType } from "../../types/products"
+
+import { ProductAndQuantityType } from "../../types/products"
 interface CartProductProps {
     cartProduct: ProductAndQuantityType
 }

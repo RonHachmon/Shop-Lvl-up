@@ -1,6 +1,6 @@
 import React, { useState,useContext } from 'react';
 import styled from 'styled-components';
-import ProductList from '../ProductList';
+import {ProductList} from '../ProductList';
 import ShopNavBar from "../NavBar";
 import {getFilteredProducts} from "../Helpers/hooks"
 import { ProductsContext } from '../../contexts/Products';
@@ -28,21 +28,31 @@ const DropdownLabel = styled.label`
 
 
 const Dropdown = styled.select`
-  padding: 4px;
+  padding: 10px;
   border-radius: 4px;
-  border: none;
+  border: 1px solid #ccc;
   background-color: #f2f2f2;
-  font-size: 14px;
+  font-size: 16px;
   color: #444;
+  transition: all 0.3s;
 
   &:focus {
     outline: none;
+    border-color: #6c63ff;
+    box-shadow: 0 0 5px rgba(108, 99, 255, 0.5);
+  }
+  
+  option {
+    font-size: 16px;
+    color: #444;
+    background-color: #f2f2f2;
   }
 `;
 
 const Main = () => {
     const { products,setProducts } = useContext(ProductsContext);
     const [selectedFilter, setSelectedFilter] = useState<string>('');
+    const itemsPerPage = 8;
     const handleFilterChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
       setSelectedFilter(event.target.value);
       switch (event.target.value) {
@@ -85,8 +95,9 @@ const Main = () => {
                 </DropdownWrapper>
 
                 <ProductListContainer>
-                    <ProductList />
+                    <ProductList itemsPerPage={itemsPerPage}/>
                 </ProductListContainer>
+    
             </ShopContainer>
         </>
     )
