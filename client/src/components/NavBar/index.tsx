@@ -57,11 +57,11 @@ const NavFilterSelect = styled.select`
   padding: 5px;
 `;
 const MenuButton = styled.button` 
-padding: 9px;
+padding: 8px;
 margin-left: 5px;
 border-radius: 7px;
-background: #3B71CA;
-border-color: #3B71CA;
+background: #20c997;
+border-color: #adb5bd;
 &:hover {
   opacity: ${({ disabled }) => (disabled ? 0.5 : 0.8)};
 }
