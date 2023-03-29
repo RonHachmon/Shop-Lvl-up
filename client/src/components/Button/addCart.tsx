@@ -9,7 +9,7 @@ interface AddToCartButtonProps {
   
 
 const AddToCartButton = styled.button<AddToCartButtonProps>`
-    background-color: ${({ disabled }) => (disabled ? "grey" : "green")};
+    background-color: ${({ disabled }) => (disabled ? "grey" : "grey")};
     color: white;
     padding: 10px;
     border-radius: 5px;
@@ -20,6 +20,7 @@ const AddToCartButton = styled.button<AddToCartButtonProps>`
   
     &:hover {
       opacity: ${({ disabled }) => (disabled ? 0.5 : 0.8)};
+      background-color: green;
     }
   `;
 
@@ -29,7 +30,7 @@ const AddCartButton = ({
 }: AddToCartButtonProps) => {
 
     return (
-        <AddToCartButton  onClick={onClick} disabled={disabled}>{'add to cart'}</AddToCartButton>
+        <AddToCartButton  onClick={onClick} disabled={disabled}>Add Cart</AddToCartButton>
     )
 }
 AddCartButton.defaultProps = {
