@@ -17,7 +17,7 @@ interface ProductListProps {
     };
     return (
       <>
-        {(productsContext.products || []).map(t => (
+        {(productsContext.products.slice((currentPage-1)*itemsPerPage,8*currentPage) || []).map(t => (
           <ProductComponent key={t.id} product={t}></ProductComponent>
         ))}
          <Pagination
