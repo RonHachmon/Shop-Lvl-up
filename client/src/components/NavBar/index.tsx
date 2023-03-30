@@ -72,7 +72,6 @@ const ShopNavBar = () => {
   const {setProducts,getByOptions,getProducts } = useContext(ProductsContext);
   const navigate = useNavigate();
   const redirectToCart = () => {
-    console.log("switch to cart")
     navigate("/cart");
   };
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
