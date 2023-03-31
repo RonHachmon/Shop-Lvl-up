@@ -9,7 +9,6 @@ export const updateQuantity = async (_id: string,amount:number): Promise<Product
     return await specific_Product.save();
 }
 
-
 export const findById = (id: string): Promise<Product> => {
     return Product.findByPk(id);
 }

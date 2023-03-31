@@ -12,14 +12,14 @@ import { CategoryAndNameType, CategoryType, NameType } from '../../types/product
 
 
 const Logo = styled.img`
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   margin: 15px;
 `;
 
-const NavContainer = styled.nav`
+export const NavContainer = styled.nav`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   background-color: #f9f9f9;
   padding: 10px;
@@ -77,31 +77,31 @@ const ShopNavBar = () => {
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(event.target.value);
   };
-  const handleFilterCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleFilterCategoryChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
     setFilterCategory(event.target.value);
+    const filterOptions:CategoryType|any={};
+    if(event.target.value)
+    {
+      filterOptions.category = event.target.value;
+        setProducts(await getByOptions(filterOptions as CategoryType));
+    }
+    else{
+      setProducts(await getProducts());
+    }
   }
   const handleApplyFilters = async () => {
     const filterOptions: CategoryType | NameType | CategoryAndNameType | any = {};
-    if(searchText && filterCategory)
-    {
-      filterOptions.name = searchText;
-      filterOptions.category = filterCategory;
-      setProducts(await getByOptions(filterOptions as CategoryAndNameType));
-    }
-    else if (searchText && !filterCategory)
+    if(searchText )
     {
       filterOptions.name = searchText;
       setProducts(await getByOptions(filterOptions as NameType));
     }
-    else if (filterCategory && !searchText)
+    else 
     {
-     filterOptions.category = filterCategory;
-     setProducts(await getByOptions(filterOptions as CategoryType));
-    }
-    else
-    {
+  
       setProducts(await getProducts());
-    }  
+    }
+ 
   };
   return (
     <NavContainer>

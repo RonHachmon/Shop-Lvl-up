@@ -9,9 +9,9 @@ interface PaginationProps {
 }
 
 const PaginationWrapper = styled.div`
-  display: flex !importent;
-  justify-content: center !importent ;
-  margin-top: 20px !importent;
+  display: flex ;
+  justify-content: center ;
+  margin-top: 20px ;
   
 `;
 

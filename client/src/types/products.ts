@@ -13,6 +13,7 @@ export interface Product {
 }
 
 export interface ProductAndQuantityType  {
+    id?: any | undefined;
     Product: Product;
     quantity: number;
 }
@@ -42,7 +43,9 @@ export interface QuantityAndIDType extends Product {
 
 export interface WishlistContextInterface {
     cartProducts: ProductAndQuantityType[];
-    addToCart:(cart:ProductAndQuantityType)=>void;
-    removeFromCart:(product: Product)=>void;
+    PopUp:boolean;
+    setPopUp:(boo:boolean) =>void;
+    addToCart:(cartProduct:ProductAndQuantityType)=>void;
+    removeFromCart:(cartProduct: ProductAndQuantityType,PermDelete?:Boolean)=>void;
     buyProducts:()=>void;
 }

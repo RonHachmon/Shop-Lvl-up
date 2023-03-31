@@ -3,8 +3,8 @@ import ProductsContextProvider from './contexts/Products';
 import WhislistContextProvider  from './contexts/Products/wishlistContext';
 import Main from './components/Main';
 import Cart  from './components/Cart/Cart';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 const App = () => {
   return (
     <ProductsContextProvider>

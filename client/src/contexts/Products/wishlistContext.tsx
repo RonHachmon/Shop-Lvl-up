@@ -1,77 +1,82 @@
 import React, {
-    createContext, useEffect, useState, useContext,
-  } from 'react';
+  createContext, useEffect, useState, useContext,
+} from 'react';
 import {
-  Product,
-    ProductAndQuantityType,
-    WishlistContextInterface
+  ProductAndQuantityType,
+  WishlistContextInterface
 } from "../../types/products";
 
 
 // First, we need to create a context
 export const WishlistContext = createContext<WishlistContextInterface>({
-    cartProducts: [],
-    //TO DO server call to buy products
-    buyProducts:() => undefined,
-    removeFromCart:(product: Product)=>undefined,
-
-
-    addToCart: (cart:ProductAndQuantityType) => undefined
+  cartProducts: [],
+  //TO DO server call to buy products
+  PopUp: false,
+  setPopUp: () => undefined,
+  buyProducts: () => undefined,
+  removeFromCart: (cartProduct: ProductAndQuantityType, PermDelete?: Boolean) => undefined,
+  addToCart: (cartProduct: ProductAndQuantityType) => undefined
 })
 
 const WhislistContextProvider = ({ children }: { children?: any }) => {
-    const [cartProducts, setCartProducts] = useState<ProductAndQuantityType[]>([]);
-    const { buyProducts,addToCart,removeFromCart} = useContext(WishlistContext);
+  const [cartProducts, setCartProducts] = useState<ProductAndQuantityType[]>([]);
+  const [showPopUp, setShowPopUp] = useState(false);
+  const { buyProducts } = useContext(WishlistContext);
 
 
-    useEffect(() => {
-      const JSONcart=localStorage.getItem("cart")
-      if (JSONcart!=null)
-      {
-        setCartProducts([...JSON.parse(JSONcart)])
-      }
-    }, []);
+  useEffect(() => {
+    const JSONcart = localStorage.getItem("cart")
+    if (JSONcart != null) {
+      setCartProducts([...JSON.parse(JSONcart)])
+      setShowPopUp(false);
+    }
+  }, []);
 
-    useEffect(() => {
-      localStorage.setItem("cart",JSON.stringify(cartProducts))
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cartProducts))
 
-    }, [cartProducts]);
+  }, [cartProducts]);
 
-    const saveToCart = (cart: ProductAndQuantityType) => {
-      for(let i=0;i<cartProducts.length;i++)
-      {
-        //if product already in array increase its quantity
-        if(cartProducts[i].Product.id==cart.Product.id)
-        {
-          cartProducts[i].quantity+=cart.quantity;
-          setCartProducts([...cartProducts])
-          return;
-        }
-      }
+  const setPopUp = (boo:boolean) => {
+      setShowPopUp(boo);
+  }
+  const saveToCart = (_cartProduct: ProductAndQuantityType) => {
+    const foundElement: number = cartProducts.findIndex(element => element.Product.id === _cartProduct.Product.id);
+    if (foundElement >= 0) {
+      cartProducts[foundElement].quantity++;
+    }
+    else {
       //else add to cart
-      setCartProducts([...cartProducts,cart])
+      setCartProducts([...cartProducts, _cartProduct])
+      return;
     }
+    setCartProducts([...cartProducts]);
+  }
 
 
-    const deleteFromCart = (product: Product) => {
-      for(let i=0;i<cartProducts.length;i++)
-      {
-        if(cartProducts[i].Product.id==product.id)
-        {
-          cartProducts.splice(i,1)
-          setCartProducts([...cartProducts])
-          return;
+  const deleteFromCart = (_cartProduct: ProductAndQuantityType, PermDelete: Boolean = true) => {
+    const foundElement: number = cartProducts.findIndex(element => element.Product.id === _cartProduct.Product.id);
+    if (foundElement >= 0) {
+      if (!PermDelete) {
+        if (cartProducts[foundElement].quantity > 1) {
+          cartProducts[foundElement].quantity--;
         }
       }
+      else {
+        cartProducts.splice(foundElement, 1);
+      }
+      setCartProducts([...cartProducts]);
     }
+    return;
+  }
 
-    return (
-      <WishlistContext.Provider
-        value={{ cartProducts: cartProducts,addToCart:saveToCart,buyProducts:buyProducts,removeFromCart:deleteFromCart}}
-      >
-        {children}
-      </WishlistContext.Provider>
-    );
-  };
-  
-  export default WhislistContextProvider;
+  return (
+    <WishlistContext.Provider
+      value={{ cartProducts: cartProducts,PopUp:showPopUp,setPopUp:setPopUp, addToCart: saveToCart, buyProducts: buyProducts, removeFromCart: deleteFromCart }}
+    >
+      {children}
+    </WishlistContext.Provider>
+  );
+};
+
+export default WhislistContextProvider;

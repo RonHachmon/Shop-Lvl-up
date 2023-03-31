@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { WishlistContext } from '../../contexts/Products/wishlistContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
-
+import { NavContainer } from "../../components/NavBar"
 
 
 const CartLabelContainer = styled.div`
@@ -15,7 +15,7 @@ display: flex;
 flex-direction: row;
 -moz-box-pack: justify;
 justify-content: space-between;
-width: 243px;
+width: 300px;
 height: 45px;
 padding: 9px;
 background-color: rgb(255, 255, 255);
@@ -35,6 +35,7 @@ border-bottom: 3px solid #3bbfc1;
 
 const LabelsDescription = styled.p`
 padding: 11px;
+margin-right: 25px;
 margin-top: 6px;
 font-size: 14px;
 `;
@@ -44,6 +45,7 @@ display: flex;
 justify-content: center;
 align-items: center;
 flex-direction: column;
+padding: 11px;
 `;
 const MarkerLabel = styled.label`
     display: flex;
@@ -55,20 +57,18 @@ const MarkerLabel = styled.label`
 `;
 
 const Logo = styled.img`
-  width: 40px;
-  height: 40px;
-  margin: 15px;
+width: 50px;
+height: 50px;
+margin: 15px;
   &:hover {
     cursor: pointer;
   }
 }
-  
 `;
-const Header = styled.header`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+const LabelsDescriptionMostRight = styled(LabelsDescription)`
+margin-right: 2px;
 `;
+
 const Title = styled.h1`
   margin: 0;
   text-align: center;
@@ -76,56 +76,75 @@ const Title = styled.h1`
   margin: 0px 60px 0px 0px;
 `;
 
+const CartPopUpMessage = styled.div`
+position: fixed;
+top: 30%;
+left: 50%;
+transform: translate(-50%, -50%);
+padding: 10px 20px;
+background-color: #800000;
+box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
+border-radius: 8px;
+z-index: 999;
+`;
 
 const Cart = () => {
-  const wishlistContext = useContext(WishlistContext);
+  const { cartProducts, setPopUp, PopUp } = useContext(WishlistContext);
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const navigate = useNavigate();
 
   const redirectToMenu = () => {
     navigate("/");
+  };
+  useEffect(() => {
+    const calculateTotalOrderPrice = () => {
+      const total = cartProducts.reduce((accumulator, current) => {
+        return accumulator + current.Product.price * current.quantity;
+      }, 0);
+      return total;
     };
-    useEffect(() => {
-        const calculateTotalOrderPrice = () => {
-          const total = wishlistContext.cartProducts.reduce((accumulator, current) => {
-            return accumulator + current.Product.price * current.quantity;
-          }, 0);
-          return total;
-        };
-      
-        setTotalPrice(calculateTotalOrderPrice());
-      }, [wishlistContext.cartProducts]);
-    return (
-      <>
-          <Header>
-            <Logo src={LogoSrc}
-             onClick={redirectToMenu}
-              />
-            <Title >Cart</Title>
-          </Header>
-            <CartContainer>
-              
-                <TopCartLabelContainer>
-                  <MarkerLabel> 
-                    <FontAwesomeIcon icon={faCircle}
-                    color="#3bbfc1" />
-                  </MarkerLabel>
-                  <LabelsDescription>Product</LabelsDescription>
-                  <LabelsDescription>Quantity</LabelsDescription>
-                  <LabelsDescription>Price</LabelsDescription>
-                </TopCartLabelContainer>
 
-                    {(wishlistContext.cartProducts || []).map(t => 
-                        (<CartProduct key={t.Product.id} cartProduct={t} ></CartProduct>))}
+    setTotalPrice(calculateTotalOrderPrice());
+  }, [cartProducts]);
 
-                 <BottomCartLabelContainer>
-                    <LabelsDescription></LabelsDescription>
-                    <LabelsDescription>Total:</LabelsDescription>
-                    <LabelsDescription>${totalPrice.toFixed(2)}</LabelsDescription>
-                </BottomCartLabelContainer>
+  useEffect(() => {
+    setTimeout(() => setPopUp(false), 3000);
+  }, [PopUp, setPopUp])
+  return (
+    <>
+      <NavContainer>
 
-           </CartContainer>
-           </>
-    )
+        <Logo src={LogoSrc}
+          onClick={redirectToMenu}
+        />
+        <Title >Cart</Title>
+
+      </NavContainer>
+      <CartContainer>
+
+        <TopCartLabelContainer>
+          <MarkerLabel>
+            <FontAwesomeIcon icon={faCircle}
+              color="#3bbfc1" />
+          </MarkerLabel>
+          <LabelsDescription>Product</LabelsDescription>
+          <LabelsDescription>Quantity</LabelsDescription>
+          <LabelsDescriptionMostRight>Price</LabelsDescriptionMostRight>
+        </TopCartLabelContainer>
+
+        {(cartProducts || []).map(t =>
+          (<CartProduct key={t.Product.id} cartProduct={t} ></CartProduct>))}
+
+        <BottomCartLabelContainer>
+          <LabelsDescription></LabelsDescription>
+          <LabelsDescription>Total:</LabelsDescription>
+          <LabelsDescriptionMostRight>${totalPrice.toFixed(2)}</LabelsDescriptionMostRight>
+        </BottomCartLabelContainer>
+
+      </CartContainer>
+      {PopUp && <CartPopUpMessage> {'Item removed from cart'}</CartPopUpMessage>}
+
+    </>
+  )
 }
 export default Cart;

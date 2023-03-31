@@ -4,17 +4,19 @@ import {ProductList} from '../ProductList';
 import ShopNavBar from "../NavBar";
 import {getFilteredProducts} from "../Helpers/hooks"
 import { ProductsContext } from '../../contexts/Products';
+import Pagination from '../Pagination/pagination';
 
 export const ShopContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 30px;
+  
 `;
 
 export const ProductListContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-gap: 20px;
+  grid-gap: 12px;
 `;
 const DropdownWrapper = styled.div`
   margin-bottom: 10px;
@@ -52,6 +54,10 @@ const Dropdown = styled.select`
 const Main = () => {
     const { products,setProducts } = useContext(ProductsContext);
     const [selectedFilter, setSelectedFilter] = useState<string>('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const handlePageChange = (page: number) => {
+        setCurrentPage(page);
+    };
     const itemsPerPage = 8;
     const handleFilterChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
       setSelectedFilter(event.target.value);
@@ -93,11 +99,19 @@ const Main = () => {
                         <option value="zToA">Alphabetical Order: Z-A</option>
                     </Dropdown>
                 </DropdownWrapper>
-
+                
                 <ProductListContainer>
-                    <ProductList itemsPerPage={itemsPerPage}/>
+                    <ProductList 
+                    itemsPerPage={itemsPerPage} 
+                    currentPage={currentPage}
+                    />
                 </ProductListContainer>
-    
+                <Pagination
+                  itemsPerPage={itemsPerPage}
+                  totalItems={products.length}
+                  currentPage={currentPage}
+                  onPageChange={handlePageChange}
+                />
             </ShopContainer>
         </>
     )

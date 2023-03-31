@@ -55,9 +55,21 @@ const ProductDescription = styled.p`
   margin-top: 6px;
 `;
 
+const PopUpMessage = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px 20px;
+  background-color: #008000;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  z-index: 999;
+`;
 const ProductComponent: React.FC<ProductProps> = ({ product }) => {
   const wishlistContext = useContext(WishlistContext);  
   const [quantity, setQuantity] = useState(1);
+  const [showPopUp, setShowPopUp] = useState(false);
   const incrementQuantity = () => {
     setQuantity(quantity + 1);
   };
@@ -67,7 +79,13 @@ const ProductComponent: React.FC<ProductProps> = ({ product }) => {
       setQuantity(quantity - 1);
     }
   };
-
+  const handleAddToCart = () => {
+    const productAndQuantity: ProductAndQuantityType = { Product: product, quantity: quantity };
+    wishlistContext.addToCart(productAndQuantity);
+    setQuantity(1);
+    setShowPopUp(true);
+    setTimeout(() => setShowPopUp(false), 1000);
+  };
   return (
     <>
     <ProductContainer>
@@ -76,20 +94,13 @@ const ProductComponent: React.FC<ProductProps> = ({ product }) => {
         <ProductName>{product.name}</ProductName>
         <ProductPrice>${product.price.toFixed(2)}</ProductPrice>
         <ProductDescription>{product.description}</ProductDescription>
-        
         <ButtonsContainer>
           <QuantitySelector quantity={quantity} decrementQuantity={decrementQuantity} incrementQuantity={incrementQuantity} />
-          <AddToCartButton disabled={false} onClick={ () => {
-            const productAndQuantity: ProductAndQuantityType = { Product: product, quantity: quantity };
-            wishlistContext.addToCart(productAndQuantity)
-            setQuantity(1);
-          }}/>
+          <AddToCartButton disabled={false} onClick={handleAddToCart}/>
         </ButtonsContainer>
-   
-      
       </ProductInformation>
     </ProductContainer>
-
+    {showPopUp  &&  <PopUpMessage>{product.name} {'added to cart'}</PopUpMessage>}
   </>
   );
 };
