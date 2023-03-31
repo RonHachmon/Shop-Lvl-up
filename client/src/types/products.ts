@@ -43,5 +43,6 @@ export interface QuantityAndIDType extends Product {
 export interface WishlistContextInterface {
     cartProducts: ProductAndQuantityType[];
     addToCart:(cart:ProductAndQuantityType)=>void;
+    removeFromCart:(product: Product)=>void;
     buyProducts:()=>void;
 }
