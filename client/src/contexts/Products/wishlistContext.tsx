@@ -37,19 +37,43 @@ const WhislistContextProvider = ({ children }: { children?: any }) => {
 
     }, [cartProducts]);
 
-    const saveToCart = (cart: ProductAndQuantityType) => {
-      for(let i=0;i<cartProducts.length;i++)
+    const updateProductQuantity =(product:ProductAndQuantityType,quantity:number)=>
+    {
+      const validateQuantity=product.quantity+quantity;
+      if(validateQuantity>=1)
       {
-        //if product already in array increase its quantity
-        if(cartProducts[i].Product.id==cart.Product.id)
-        {
-          cartProducts[i].quantity+=cart.quantity;
-          setCartProducts([...cartProducts])
-          return;
-        }
+        product.quantity=validateQuantity;
+        setCartProducts([...cartProducts])
       }
-      //else add to cart
-      setCartProducts([...cartProducts,cart])
+      else
+      {
+        //throw exception not valid
+      }
+     
+    }
+    const addProductToCart =(product:ProductAndQuantityType)=>
+    {
+      if(product.quantity>=1)
+      {
+        setCartProducts([...cartProducts,product])
+      }
+      else
+      {
+              //throw exception not valid
+      }
+    }
+
+    const saveToCart = (cartProduct: ProductAndQuantityType) => {
+      const productExist=cartProducts.find(product=>product.Product.id==cartProduct.Product.id)
+      
+      if(productExist)
+      {
+        updateProductQuantity(productExist,cartProduct.quantity)
+      }
+      else
+      {
+        addProductToCart(cartProduct)
+      }
     }
 
 

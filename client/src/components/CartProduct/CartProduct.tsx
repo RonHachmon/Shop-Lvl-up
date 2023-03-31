@@ -1,5 +1,6 @@
 import { useContext,useEffect } from 'react';
 import styled from 'styled-components';
+import QuantitySelector from '../Button/counterBut'
 import { WishlistContext } from '../../contexts/Products/wishlistContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMultiply } from '@fortawesome/free-solid-svg-icons';
@@ -16,7 +17,7 @@ flex-direction: row;
 -moz-box-pack: justify;
 justify-content: space-between;
 space-between=10px;
-width: 243px;
+width: 300px;
 height: 37px;
 padding: 9px;
 background-color: rgb(255, 255, 255);
@@ -63,10 +64,19 @@ const CartProduct =({cartProduct}:CartProductProps) => {
         <FontAwesomeIcon icon={faMultiply} color="black" />
         </DeleteButton>
         <ProductDescription>{cartProduct.Product.name}</ProductDescription>
-        <ProductDescription>{cartProduct.quantity}</ProductDescription>
+        <QuantitySelector quantity={cartProduct.quantity} decrementQuantity={()=>
+            {
+                const productAndQuantity: ProductAndQuantityType = { Product: cartProduct.Product, quantity: -1 }
+                whishlistContext.addToCart(productAndQuantity)}}
+             incrementQuantity={()=>{
+                const productAndQuantity: ProductAndQuantityType = { Product: cartProduct.Product, quantity: 1 }
+                whishlistContext.addToCart(productAndQuantity)}}
+        />
+
         <ProductDescription>${(cartProduct.quantity*cartProduct.Product.price).toFixed(2)}</ProductDescription>
     </ProductDetailsContainer>
     )
+            //<ProductDescription>{cartProduct.quantity}</ProductDescription>
 }
 
 export default CartProduct;

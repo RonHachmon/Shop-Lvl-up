@@ -15,7 +15,7 @@ display: flex;
 flex-direction: row;
 -moz-box-pack: justify;
 justify-content: space-between;
-width: 243px;
+width: 300px;
 height: 45px;
 padding: 9px;
 background-color: rgb(255, 255, 255);
@@ -35,8 +35,12 @@ border-bottom: 3px solid #3bbfc1;
 
 const LabelsDescription = styled.p`
 padding: 11px;
+margin-right: 25px;
 margin-top: 6px;
 font-size: 14px;
+`;
+const LabelsDescriptionMostRight = styled(LabelsDescription)`
+margin-right: 2px;
 `;
 
 const CartContainer = styled.div`
@@ -112,7 +116,7 @@ const Cart = () => {
                   </MarkerLabel>
                   <LabelsDescription>Product</LabelsDescription>
                   <LabelsDescription>Quantity</LabelsDescription>
-                  <LabelsDescription>Price</LabelsDescription>
+                  <LabelsDescriptionMostRight margin-right='0px'>Price</LabelsDescriptionMostRight>
                 </TopCartLabelContainer>
 
                     {(wishlistContext.cartProducts || []).map(t => 
@@ -121,7 +125,7 @@ const Cart = () => {
                  <BottomCartLabelContainer>
                     <LabelsDescription></LabelsDescription>
                     <LabelsDescription>Total:</LabelsDescription>
-                    <LabelsDescription>${totalPrice.toFixed(2)}</LabelsDescription>
+                    <LabelsDescriptionMostRight>${totalPrice.toFixed(2)}</LabelsDescriptionMostRight>
                 </BottomCartLabelContainer>
 
            </CartContainer>

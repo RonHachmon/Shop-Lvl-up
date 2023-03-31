@@ -46,7 +46,9 @@ const QuantitySelector: React.FC<QuantitySelectorProps> = ({
 
   return (
     <QuantityButton>
-      <QuantityButtonControl onClick={decrementQuantity}>-</QuantityButtonControl>
+      <QuantityButtonControl onClick={decrementQuantity}
+      disabled={quantity === 1}
+      >-</QuantityButtonControl>
       <QuantityButtonValue>{quantity}</QuantityButtonValue>
       <QuantityButtonControl onClick={incrementQuantity}>+</QuantityButtonControl>
     </QuantityButton>
