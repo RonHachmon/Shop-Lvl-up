@@ -76,7 +76,6 @@ const CartProduct =({cartProduct}:CartProductProps) => {
         <ProductDescription>${(cartProduct.quantity*cartProduct.Product.price).toFixed(2)}</ProductDescription>
     </ProductDetailsContainer>
     )
-            //<ProductDescription>{cartProduct.quantity}</ProductDescription>
 }
 
 export default CartProduct;
