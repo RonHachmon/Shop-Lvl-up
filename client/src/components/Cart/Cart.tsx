@@ -2,6 +2,7 @@
 import { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import LogoSrc from '../../assets/logo.png';
+import Pagination from '../Pagination/pagination';
 import CartProduct from '../CartProduct/CartProduct';
 import { useNavigate } from "react-router-dom";
 import { WishlistContext } from '../../contexts/Products/wishlistContext';
@@ -91,6 +92,11 @@ z-index: 999;
 const Cart = () => {
   const { cartProducts, setPopUp, PopUp } = useContext(WishlistContext);
   const [totalPrice, setTotalPrice] = useState<number>(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const handlePageChange = (page: number) => {
+      setCurrentPage(page);
+  };
+  const itemsPerPage = 5;
   const navigate = useNavigate();
 
   const redirectToMenu = () => {
@@ -113,7 +119,6 @@ const Cart = () => {
   return (
     <>
       <NavContainer>
-
         <Logo src={LogoSrc}
           onClick={redirectToMenu}
         />
@@ -132,7 +137,11 @@ const Cart = () => {
           <LabelsDescriptionMostRight>Price</LabelsDescriptionMostRight>
         </TopCartLabelContainer>
 
-        {(cartProducts || []).map(t =>
+        {/* {(productsContext.products.slice((currentPage-1)*itemsPerPage,8*currentPage) || []).map(t => (
+          <ProductComponent key={t.id} product={t}></ProductComponent>
+        ))} */}
+
+        {(cartProducts.slice((currentPage-1)*itemsPerPage,itemsPerPage*currentPage) || []).map(t =>
           (<CartProduct key={t.Product.id} cartProduct={t} ></CartProduct>))}
 
         <BottomCartLabelContainer>
@@ -140,6 +149,12 @@ const Cart = () => {
           <LabelsDescription>Total:</LabelsDescription>
           <LabelsDescriptionMostRight>${totalPrice.toFixed(2)}</LabelsDescriptionMostRight>
         </BottomCartLabelContainer>
+        <Pagination
+                  itemsPerPage={itemsPerPage}
+                  totalItems={cartProducts.length}
+                  currentPage={currentPage}
+                  onPageChange={handlePageChange}
+                />
 
       </CartContainer>
       {PopUp && <CartPopUpMessage> {'Item removed from cart'}</CartPopUpMessage>}
