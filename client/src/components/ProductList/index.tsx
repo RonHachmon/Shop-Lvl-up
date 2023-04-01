@@ -12,7 +12,7 @@ interface ProductListProps {
     const productsContext = useContext(ProductsContext);
     return (
       <>
-        {(productsContext.products.slice((currentPage-1)*itemsPerPage,8*currentPage) || []).map(t => (
+        {(productsContext.products.slice((currentPage-1)*itemsPerPage,itemsPerPage*currentPage) || []).map(t => (
           <ProductComponent key={t.id} product={t}></ProductComponent>
         ))}
         
